@@ -4,14 +4,15 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
 
-    <groupId>com.tinoji.sonar</groupId>
-    <artifactId>sonar-php-custom-rules</artifactId>
-    <version>1.0-SNAPSHOT</version>
+    <groupId>com.github.tinoji</groupId>
+    <artifactId>sonar-php-forbidden-string-rule</artifactId>
+    <version>0.1</version>
 
+    <packaging>sonar-plugin</packaging>
 
-    <name>SonarQube PHP Custom Rules Example</name>
-    <description>PHP Custom Rules Example for SonarQube</description>
-    <inceptionYear>2016</inceptionYear>
+    <name>PHP Custom Rules for Forbidden string</name>
+    <description>Detect forbidden string listed</description>
+    <inceptionYear>2019</inceptionYear>
 
     <properties>
         <sonar.version>6.7</sonar.version>
@@ -49,9 +50,9 @@
                 <version>1.17</version>
                 <extensions>true</extensions>
                 <configuration>
-                    <pluginKey>php-custom</pluginKey>
-                    <pluginName>PHP Custom Rules</pluginName>
-                    <pluginClass>org.sonar.samples.php.PHPCustomRulesPlugin</pluginClass>
+                    <pluginKey>sonar-php-forbidden-string-rule</pluginKey>
+                    <pluginName>PHP Custom Rules for Forbidden string</pluginName>
+                    <pluginClass>com.github.tinoji.PHPCustomRulesPlugin</pluginClass>
                     <sonarLintSupported>true</sonarLintSupported>
                     <sonarQubeMinVersion>6.7</sonarQubeMinVersion>
                     <basePlugin>php</basePlugin>

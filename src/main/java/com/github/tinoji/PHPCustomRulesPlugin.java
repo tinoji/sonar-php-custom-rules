@@ -17,7 +17,7 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package com.tinoji.sonar;
+package com.github.tinoji;
 
 import org.sonar.api.Plugin;
 
@@ -28,6 +28,6 @@ public class PHPCustomRulesPlugin implements Plugin {
 
     @Override
     public void define(Context context) {
-        context.addExtension(MyPhpRules.class);
+        context.addExtension(PHPForbiddenStringRule.class);
     }
 }

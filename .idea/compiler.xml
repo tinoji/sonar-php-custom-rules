@@ -7,10 +7,14 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="sonar-php-custom-rules" />
+        <module name="sonar-php-custom-rules-confidential" />
+        <module name="sonar-php-forbidden-string-rules" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
       <module name="sonar-php-custom-rules" target="1.8" />
+      <module name="sonar-php-custom-rules-confidential" target="1.8" />
+      <module name="sonar-php-forbidden-string-rules" target="1.8" />
     </bytecodeTargetLevel>
   </component>
 </project>

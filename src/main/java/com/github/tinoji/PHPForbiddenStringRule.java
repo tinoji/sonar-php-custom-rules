@@ -17,8 +17,9 @@
  * along with this program; if not, write to the Free Software Foundation,
  * Inc., 51 Franklin Street, Fifth Floor, Boston, MA  02110-1301, USA.
  */
-package com.tinoji.sonar;
+package com.github.tinoji;
 
+import com.github.tinoji.checks.ForbiddenStringLiteralUseCheck;
 import com.google.common.collect.ImmutableList;
 import java.io.ByteArrayOutputStream;
 import java.io.IOException;
@@ -27,16 +28,15 @@ import java.net.URL;
 import java.nio.charset.StandardCharsets;
 import java.util.HashMap;
 import java.util.Map;
+import org.sonar.api.rules.RuleType;
 import org.sonar.api.server.rule.RulesDefinition;
 import org.sonar.api.server.rule.RulesDefinitionAnnotationLoader;
 import org.sonar.plugins.php.api.visitors.PHPCustomRuleRepository;
-import com.tinoji.sonar.checks.ForbiddenFunctionUseCheck;
-import com.tinoji.sonar.checks.OtherForbiddenFunctionUseCheck;
 
 /**
  * Extension point to define a PHP rule repository.
  */
-public class MyPhpRules implements RulesDefinition, PHPCustomRuleRepository {
+public class PHPForbiddenStringRule implements RulesDefinition, PHPCustomRuleRepository {
 
     /**
      * Provide the repository key
@@ -52,24 +52,27 @@ public class MyPhpRules implements RulesDefinition, PHPCustomRuleRepository {
      */
     @Override
     public ImmutableList<Class> checkClasses() {
-        return ImmutableList.of(ForbiddenFunctionUseCheck.class, OtherForbiddenFunctionUseCheck.class);
+        // You can add check classes here
+        return ImmutableList.of(ForbiddenStringLiteralUseCheck.class);
     }
 
     @Override
     public void define(Context context) {
-        NewRepository repository = context.createRepository(repositoryKey(), "php").setName("MyCompany Custom Repository");
+        NewRepository repository = context.createRepository(repositoryKey(), "php").setName("Forbidden string rules");
 
         // Load rule meta data from annotations
         RulesDefinitionAnnotationLoader annotationLoader = new RulesDefinitionAnnotationLoader();
         checkClasses().forEach(ruleClass -> annotationLoader.load(repository, ruleClass));
 
+        // Set rule types
+        repository.rules().forEach(rule -> rule.setType(RuleType.VULNERABILITY));
+
         // Optionally override html description from annotation with content from html files
-        repository.rules().forEach(rule -> rule.setHtmlDescription(loadResource("/org/sonar/l10n/php/rules/custom/" + rule.key() + ".html")));
+        repository.rules().forEach(rule -> rule.setHtmlDescription(loadResource("/com/github/tinoji/l10n/php/rules/custom/" + rule.key() + ".html")));
 
         // Optionally define remediation costs
         Map<String, String> remediationCosts = new HashMap<>();
-        remediationCosts.put(ForbiddenFunctionUseCheck.KEY, "5min");
-        remediationCosts.put(OtherForbiddenFunctionUseCheck.KEY, "5min");
+        remediationCosts.put(ForbiddenStringLiteralUseCheck.KEY, "5min");
         repository.rules().forEach(rule -> rule.setDebtRemediationFunction(
                 rule.debtRemediationFunctions().constantPerIssue(remediationCosts.get(rule.key()))));
 
