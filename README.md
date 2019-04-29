@@ -2,6 +2,8 @@ sonar-php-forbidden-string-rules
 ================================
 PHP Custom Rules to detect forbidden word (for example, hard-coded password).
 
+![screenshot](https://github.com/tinoji/sonar-php-forbidden-string-rules/blob/master/images/screenshot.png)
+
 Build
 ------
 `mvn clean package`
